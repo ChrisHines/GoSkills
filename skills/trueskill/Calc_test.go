@@ -39,6 +39,18 @@ func AllTwoTeamScenarios(t *testing.T, calc skills.Calc) {
 	FourOnFourSimpleTest(t, calc)
 }
 
+func AllMultipleTeamScenarios(t *testing.T, calc skills.Calc) {
+	ThreeTeamsOfOneNotDrawn(t, calc)
+	// ThreeTeamsOfOneDrawn(t, calc)
+	// FourTeamsOfOneNotDrawn(t, calc)
+	// FiveTeamsOfOneNotDrawn(t, calc)
+	// EightTeamsOfOneDrawn(t, calc)
+	// EightTeamsOfOneUpset(t, calc)
+	// SixteenTeamsOfOneNotDrawn(t, calc)
+
+	// TwoOnFourOnTwoWinDraw(t, calc)
+}
+
 //------------------- Actual Tests ---------------------------
 // If you see more than 3 digits of precision in the decimal point, then the expected values calculated from
 // F# RalfH's implementation with the same input. It didn't support teams, so team values all came from the
@@ -501,6 +513,33 @@ func ThreeOnTwoTests(t *testing.T, calc skills.Calc) {
 	AssertRating(t, 32.132, 2.949, newRatings[5])
 
 	AssertMatchQuality(t, 0.254, calc.CalcMatchQual(gameInfo, teams))
+}
+
+func ThreeTeamsOfOneNotDrawn(t *testing.T, calc skills.Calc) {
+	gameInfo := skills.DefaultGameInfo
+
+	player1 := skills.NewPlayer(1)
+	player2 := skills.NewPlayer(2)
+	player3 := skills.NewPlayer(3)
+
+	team1 := skills.NewTeam()
+	team1.AddPlayer(*player1, gameInfo.DefaultRating())
+
+	team2 := skills.NewTeam()
+	team2.AddPlayer(*player2, gameInfo.DefaultRating())
+
+	team3 := skills.NewTeam()
+	team3.AddPlayer(*player3, gameInfo.DefaultRating())
+
+	teams := []skills.Team{team1, team2, team3}
+
+	newRatings := calc.CalcNewRatings(gameInfo, teams, 1, 2, 3)
+
+	AssertRating(t, 31.675352419172107, 6.6559853776206905, newRatings[*player1])
+	AssertRating(t, 25.000000000003912, 6.2078966412243233, newRatings[*player2])
+	AssertRating(t, 18.324647580823971, 6.6559853776218318, newRatings[*player3])
+
+	AssertMatchQuality(t, 0.200, calc.CalcMatchQual(gameInfo, teams))
 }
 
 func testLoc() string {
