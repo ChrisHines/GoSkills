@@ -1,6 +1,6 @@
 package skills
 
-type PlayerRatings map[Player]Rating
+type PlayerRatings map[interface{}]Rating
 
 type RatingAccumulator func(r Rating, a float64) float64
 
