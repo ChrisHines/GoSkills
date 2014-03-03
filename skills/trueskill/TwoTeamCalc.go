@@ -13,7 +13,7 @@ type TwoTeamCalc struct{}
 
 // Calculates new ratings based on the prior ratings and team ranks use 1 for first place, repeat the number for a tie (e.g. 1, 2, 2).
 func (calc *TwoTeamCalc) CalcNewRatings(gi *skills.GameInfo, teams []skills.Team, ranks ...int) skills.PlayerRatings {
-	newSkills := make(map[skills.Player]skills.Rating)
+	newSkills := make(map[interface{}]skills.Rating)
 
 	// Basic argument checking
 	validateTeamCount(teams, twoTeamTeamRange)
@@ -108,8 +108,8 @@ func (calc *TwoTeamCalc) CalcMatchQual(gi *skills.GameInfo, teams []skills.Team)
 	team2MeanSum := team2.Accum(skills.MeanSum)
 	team2VarSum := team2.Accum(skills.VarianceSum)
 
-	// This comes from equation 4.1 in the TrueSkill paper on page 8            
-	// The equation was broken up into the part under the square root sign and 
+	// This comes from equation 4.1 in the TrueSkill paper on page 8
+	// The equation was broken up into the part under the square root sign and
 	// the exponential part to make the code easier to read.
 
 	betaSqrPlayers := betaSqr * float64(totalPlayers)

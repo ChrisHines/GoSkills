@@ -14,7 +14,7 @@ type TwoPlayerCalc struct{}
 
 // Calculates new ratings based on the prior ratings and team ranks use 1 for first place, repeat the number for a tie (e.g. 1, 2, 2).
 func (calc *TwoPlayerCalc) CalcNewRatings(gi *skills.GameInfo, teams []skills.Team, ranks ...int) skills.PlayerRatings {
-	newSkills := make(map[skills.Player]skills.Rating)
+	newSkills := make(map[interface{}]skills.Rating)
 
 	// Basic argument checking
 	validateTeamCount(teams, twoPlayerTeamRange)
