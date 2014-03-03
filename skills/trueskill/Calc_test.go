@@ -518,26 +518,22 @@ func ThreeOnTwoTests(t *testing.T, calc skills.Calc) {
 func ThreeTeamsOfOneNotDrawn(t *testing.T, calc skills.Calc) {
 	gameInfo := skills.DefaultGameInfo
 
-	player1 := skills.NewPlayer(1)
-	player2 := skills.NewPlayer(2)
-	player3 := skills.NewPlayer(3)
-
 	team1 := skills.NewTeam()
-	team1.AddPlayer(*player1, gameInfo.DefaultRating())
+	team1.AddPlayer(1, gameInfo.DefaultRating())
 
 	team2 := skills.NewTeam()
-	team2.AddPlayer(*player2, gameInfo.DefaultRating())
+	team2.AddPlayer(2, gameInfo.DefaultRating())
 
 	team3 := skills.NewTeam()
-	team3.AddPlayer(*player3, gameInfo.DefaultRating())
+	team3.AddPlayer(3, gameInfo.DefaultRating())
 
 	teams := []skills.Team{team1, team2, team3}
 
 	newRatings := calc.CalcNewRatings(gameInfo, teams, 1, 2, 3)
 
-	AssertRating(t, 31.675352419172107, 6.6559853776206905, newRatings[*player1])
-	AssertRating(t, 25.000000000003912, 6.2078966412243233, newRatings[*player2])
-	AssertRating(t, 18.324647580823971, 6.6559853776218318, newRatings[*player3])
+	AssertRating(t, 31.675352419172107, 6.6559853776206905, newRatings[1])
+	AssertRating(t, 25.000000000003912, 6.2078966412243233, newRatings[2])
+	AssertRating(t, 18.324647580823971, 6.6559853776218318, newRatings[3])
 
 	AssertMatchQuality(t, 0.200, calc.CalcMatchQual(gameInfo, teams))
 }
